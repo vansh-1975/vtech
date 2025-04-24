@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JS Bouncing Ball</title>
+    <style>
+      body {
+        margin: 0;
+        background: #222;
+        overflow: hidden;
+      }
+      .ball {
+        height: 60px;
+        width: 60px;
+        position: absolute;
+        border-radius: 50%;
+        background-color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="ball" id="ball"></div>
+    <script>
+      const ball = document.getElementById("ball");
+      let posX = 100,
+        posY = 100;
+      let velX = 3,
+        velY = 2;
+      const ballSize = 60;
+
+      function randomColor() {
+        return `rgb(${Math.random() * 255}, ${Math.random() * 255}, ${
+          Math.random() * 255
+        })`;
+      }
+
+      function moveBall() {
+        const w = window.innerWidth;
+        const h = window.innerHeight;
+
+        posX += velX;
+        posY += velY;
+
+        if (posX <= 0 || posX + ballSize >= w) {
+          velX *= -1;
+          ball.style.backgroundColor = randomColor();
+        }
+        if (posY <= 0 || posY + ballSize >= h) {
+          velY *= -1;
+          ball.style.backgroundColor = randomColor();
+        }
+
+        ball.style.left = posX + "px";
+        ball.style.top = posY + "px";
+        requestAnimationFrame(moveBall);
+      }
+
+      moveBall();
+    </script>
+  </body>
+</html>
