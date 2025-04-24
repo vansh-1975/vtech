@@ -5,28 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>JS Bouncing Ball</title>
     <style>
-      @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap');
+      @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap');
 
       body {
         margin: 0;
-        height: 100vh;
-        background: linear-gradient(135deg, #1e1e2f, #111);
+        background: #111;
         overflow: hidden;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
         font-family: 'Orbitron', sans-serif;
-      }
-
-      h1 {
-        color: #fff;
-        font-size: 2rem;
-        margin-bottom: 40px;
-        background: rgba(255, 255, 255, 0.1);
-        padding: 10px 20px;
-        border-radius: 10px;
-        box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+        color: white;
       }
 
       .ball {
@@ -35,26 +21,68 @@
         position: absolute;
         border-radius: 50%;
         background-color: red;
-        box-shadow: 0 0 25px rgba(255, 0, 0, 0.8);
-        transition: background-color 0.2s;
+        box-shadow: 0 0 20px rgba(255, 0, 0, 0.7);
+      }
+
+      .center-container {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        z-index: 2;
+      }
+
+      .center-text {
+        font-size: 2.2rem;
+        background: rgba(255, 255, 255, 0.05);
+        padding: 10px 20px;
+        border-radius: 12px;
+        backdrop-filter: blur(8px);
+        box-shadow: 0 0 12px rgba(255, 255, 255, 0.2);
+        margin-bottom: 20px;
+      }
+
+      button {
+        padding: 10px 20px;
+        font-size: 1rem;
+        border: none;
+        border-radius: 10px;
+        background-color: #00aaff;
+        color: white;
+        cursor: pointer;
+        box-shadow: 0 0 10px rgba(0, 170, 255, 0.5);
+        transition: background-color 0.3s ease;
+      }
+
+      button:hover {
+        background-color: #0077cc;
       }
     </style>
   </head>
   <body>
-    <h1>Bouncing Ball Animation</h1>
     <div class="ball" id="ball"></div>
+
+    <div class="center-container">
+      <div class="center-text">Bouncing Ball Animation</div>
+      <button onclick="toggleAnimation()" id="toggleBtn">Stop</button>
+    </div>
+
     <script>
       const ball = document.getElementById("ball");
+      const toggleBtn = document.getElementById("toggleBtn");
+
       let posX = 100,
         posY = 100;
       let velX = 3,
         velY = 2;
       const ballSize = 60;
 
+      let animationId;
+      let isAnimating = true;
+
       function randomColor() {
-        return `rgb(${Math.random() * 255}, ${Math.random() * 255}, ${
-          Math.random() * 255
-        })`;
+        return `rgb(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255})`;
       }
 
       function moveBall() {
@@ -68,6 +96,7 @@
           velX *= -1;
           ball.style.backgroundColor = randomColor();
         }
+
         if (posY <= 0 || posY + ballSize >= h) {
           velY *= -1;
           ball.style.backgroundColor = randomColor();
@@ -75,7 +104,19 @@
 
         ball.style.left = posX + "px";
         ball.style.top = posY + "px";
-        requestAnimationFrame(moveBall);
+
+        animationId = requestAnimationFrame(moveBall);
+      }
+
+      function toggleAnimation() {
+        if (isAnimating) {
+          cancelAnimationFrame(animationId);
+          toggleBtn.textContent = "Start";
+        } else {
+          moveBall();
+          toggleBtn.textContent = "Stop";
+        }
+        isAnimating = !isAnimating;
       }
 
       moveBall();
