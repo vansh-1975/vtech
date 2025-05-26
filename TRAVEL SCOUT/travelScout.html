@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Travel Scout Form</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1350&q=80') no-repeat center center fixed;
+  background-size: cover;
+  color: #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  position: relative;
+}
+
+/* Overlay for contrast */
+body::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  z-index: -1;
+}
+
+.container {
+  background-color: rgba(255, 255, 255, 0.95);
+  padding: 20px;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 800px;
+  max-height: 95vh;
+  overflow-y: auto;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  animation: fadeIn 0.6s ease-in;
+}
+
+/* Hide scrollbar on all devices (still scrollable if needed) */
+.container::-webkit-scrollbar {
+  display: none;
+}
+.container {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.container:hover {
+  transform: scale(1.01);
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 2rem;
+  background: linear-gradient(to right, #0055ff, #00c6ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+h1 span {
+  font-size: 0.9rem;
+  font-weight: normal;
+  color: #666;
+  display: block;
+  margin-top: 4px;
+}
+
+.form-group {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+
+.form-group.full {
+  flex-direction: column;
+}
+
+.form-group > div {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+label {
+  font-weight: 600;
+  margin-bottom: 4px;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+input, select, textarea {
+  padding: 10px 14px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  background-color: #f0f4f8;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: #007BFF;
+  box-shadow: 0 0 4px rgba(0, 123, 255, 0.3);
+  background-color: #fff;
+}
+
+input:hover, select:hover, textarea:hover {
+  border-color: #00c6ff;
+}
+
+textarea {
+  resize: vertical;
+}
+
+.input-icon i {
+  position: absolute;
+  left: 12px;
+  top: 36px;
+  color: #777;
+  font-size: 0.95rem;
+}
+
+.input-icon input {
+  padding-left: 34px;
+}
+
+.btn-wrap {
+  text-align: right;
+  margin-top: 10px;
+}
+
+button {
+  padding: 10px 24px;
+  font-size: 0.95rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #0055ff, #00c6ff);
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+}
+
+button:hover {
+  background: linear-gradient(135deg, #0040cc, #00aaff);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 123, 255, 0.4);
+}
+
+#loading {
+  display: none;
+  text-align: center;
+  margin-top: 12px;
+  color: #007bff;
+}
+
+#successToast {
+  display: none;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #28a745;
+  color: white;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+
+footer {
+  text-align: center;
+  margin-top: 10px;
+  font-size: 0.85rem;
+  color: #aaa;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 768px) {
+  .form-group {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .btn-wrap {
+    text-align: center;
+  }
+}
+</style>
+
+</head>
+<body>
+  
+  <div class="container">
+    <form class="form-box" onsubmit="handleFormSubmit(event)">
+      <h1>Travel Scout <span>(Web)</span></h1>
+
+      <div class="form-group">
+        <div class="input-icon">
+          <label>First Name</label>
+          <i class="fa fa-user"></i>
+          <input type="text" id="firstName" placeholder="Enter first name" required>
+        </div>
+        <div class="input-icon">
+          <label>Last Name</label>
+          <i class="fa fa-user"></i>
+          <input type="text" id="lastName" placeholder="Enter last name" required>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="input-icon">
+          <label>Phone Number</label>
+          <i class="fa fa-phone"></i>
+          <input type="tel" id="phone" placeholder="Enter phone number" required>
+        </div>
+        <div>
+          <label>Preferred Location</label>
+          <select id="destination" required>
+            <option value="">Select Location</option>
+            <option value="Beach">Beach</option>
+            <option value="Hill">Hill Station</option>
+            <option value="City">City</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group full">
+        <label>About Location</label>
+        <textarea id="description" placeholder="Any description about the place..." rows="3"></textarea>
+      </div>
+
+      <div class="form-group">
+        <div class="input-icon">
+          <label>Preferred City</label>
+          <i class="fa fa-city"></i>
+          <input type="text" id="city" placeholder="Enter city name" required>
+        </div>
+        <div class="input-icon">
+          <label>Budget</label>
+          <i class="fa fa-dollar-sign"></i>
+          <input type="number" id="budget" placeholder="Enter budget" required>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div>
+          <label>Date</label>
+          <input type="date" id="date" required>
+        </div>
+        <div>
+          <label>Upload Preferred Pic (if any)</label>
+          <input type="file" id="pic">
+        </div>
+      </div>
+
+      <div class="btn-wrap">
+        <button type="submit">Apply Now</button>
+      </div>
+
+      <div id="loading">
+        <i class="fas fa-spinner fa-spin" style="font-size: 24px;"></i>
+        <p>Submitting...</p>
+      </div>
+    </form>
+    <div id="successToast">Form submitted successfully!</div>
+    <footer>© 2025 Travel Scout. All rights reserved.</footer>
+  </div>
+
+  <script>
+    function handleFormSubmit(event) {
+      event.preventDefault();
+
+      document.querySelector('.btn-wrap').style.display = 'none';
+      document.getElementById("loading").style.display = "block";
+
+      const formData = {
+        firstName: document.getElementById("firstName").value,
+        lastName: document.getElementById("lastName").value,
+        phone: document.getElementById("phone").value,
+        destination: document.getElementById("destination").value,
+        description: document.getElementById("description").value,
+        city: document.getElementById("city").value,
+        budget: document.getElementById("budget").value,
+        date: document.getElementById("date").value,
+      };
+
+      for (let key in formData) {
+        localStorage.setItem(key, formData[key]);
+      }
+
+      setTimeout(() => {
+        document.getElementById("loading").style.display = "none";
+        document.getElementById("successToast").style.display = "block";
+
+        setTimeout(() => {
+          window.location.href = "details.html";
+        }, 1500);
+      }, 1000);
+    }
+  </script>
+</body>
+</html>

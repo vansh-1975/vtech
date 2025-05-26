@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Details - Travel Scout</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <style>
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', sans-serif;
+  }
+
+  html, body {
+    height: 100%;
+    width: 100%;
+  }
+
+  body {
+    background: url('https://images.unsplash.com/photo-1493558103817-58b2924bce98?auto=format&fit=crop&w=1350&q=80') no-repeat center center fixed;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .card {
+    background-color: rgba(255, 255, 255, 0.95);
+    padding: 20px;
+    border-radius: 16px;
+    width: 90%;
+    max-width: 750px;
+    height: auto;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  h2 {
+    text-align: center;
+    margin-bottom: 12px;
+    font-size: 1.8rem;
+    color: #0055ff;
+  }
+
+  .info-group {
+    margin-bottom: 6px;
+    padding: 8px 10px;
+    border-left: 4px solid #007BFF;
+    background-color: #f5fbff;
+    border-radius: 8px;
+  }
+
+  .info-group label {
+    font-weight: bold;
+    color: #333;
+    font-size: 1rem;
+  }
+
+  .info-group p {
+    font-size: 0.95rem;
+    color: #555;
+  }
+
+  .btn-wrap {
+    margin-top: 10px;
+    text-align: center;
+  }
+
+  button {
+    padding: 10px 22px;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #0055ff, #00c6ff);
+    color: white;
+    cursor: pointer;
+    transition: 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0,123,255,0.3);
+  }
+
+  button:hover {
+    transform: scale(1.03);
+    background: linear-gradient(135deg, #0040cc, #00aaff);
+    box-shadow: 0 6px 16px rgba(0,123,255,0.4);
+  }
+
+  @media (max-width: 600px) {
+    .card {
+      padding: 14px;
+      max-height: 90vh;
+    }
+
+    h2 {
+      font-size: 1.4rem;
+    }
+  }
+</style>
+
+
+  </head>
+  <body>
+    <div class="card">
+      <h2>Your Travel Details</h2>
+
+      <div class="info-group">
+        <label>First Name</label>
+        <p id="firstName"></p>
+      </div>
+      <div class="info-group">
+        <label>Last Name</label>
+        <p id="lastName"></p>
+      </div>
+      <div class="info-group">
+        <label>Phone Number</label>
+        <p id="phone"></p>
+      </div>
+      <div class="info-group">
+        <label>Preferred Location</label>
+        <p id="destination"></p>
+      </div>
+      <div class="info-group">
+        <label>Description</label>
+        <p id="description"></p>
+      </div>
+      <div class="info-group">
+        <label>City</label>
+        <p id="city"></p>
+      </div>
+      <div class="info-group">
+        <label>Budget</label>
+        <p id="budget"></p>
+      </div>
+      <div class="info-group">
+        <label>Date</label>
+        <p id="date"></p>
+      </div>
+
+      <div class="btn-wrap">
+        <button onclick="window.location.href='location.html';">Confirm</button>
+      </div>
+    </div>
+
+    <script>
+      // Load data from localStorage
+      const fields = [
+        "firstName",
+        "lastName",
+        "phone",
+        "destination",
+        "description",
+        "city",
+        "budget",
+        "date",
+      ];
+
+      fields.forEach((field) => {
+        const value = localStorage.getItem(field);
+        document.getElementById(field).textContent = value || "N/A";
+      });
+
+      function goToLocation() {
+        window.location.href = "location.html";
+      }
+    </script>
+  </body>
+</html>
